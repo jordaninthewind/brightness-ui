@@ -23,25 +23,36 @@ class App extends Component {
       data: {
         light: { on, brightness, name, id },
       },
-    } = await Actions.getInitialState();
+    } = await Actions.getLightState();
 
     this.setState({
       name,
       id,
       on,
       brightness,
-    })
-
-    console.log(this.state)
-    return true;
+    });
   }
+
+  updateLightBrightness = async (brightness) => {
+    const update = await Actions.updateBrightness(brightness);
+  };
+
+  toggleLight = async (state) => {
+    const turnOnOffLight = await Actions.toggleLight(!state);
+  };
 
   render() {
     return (
       <div className="App">
         <h1>{this.state.name}</h1>
-        <ToggleSwitchComponent isLightOn={this.state.on}/>
-        <BrightnessSliderComponent currentBrightness={this.state.brightness}/>
+        <ToggleSwitchComponent
+          isLightOn={this.state.on}
+          onToggleLight={this.toggleLight}
+        />
+        <BrightnessSliderComponent
+          currentBrightness={this.state.brightness}
+          onUpdateLight={this.updateLightBrightness}
+        />
       </div>
     );
   }
