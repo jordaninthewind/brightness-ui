@@ -9,7 +9,7 @@ const BrightnessSliderComponent = (props) => {
         min="0"
         max="1"
         step=".1"
-        defaultValue={props.currentBrightness}
+        value={props.currentBrightness}
         onChange={props.onUpdateBrightness}
       />
     </div>
