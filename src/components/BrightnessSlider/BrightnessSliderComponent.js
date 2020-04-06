@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+import "./BrightnessSliderComponent.css";
 
 const BrightnessSliderComponent = (props) => {
   return (
@@ -15,6 +17,12 @@ const BrightnessSliderComponent = (props) => {
       />
     </div>
   );
+};
+
+BrightnessSliderComponent.propTypes = {
+  onUpdateBrightness: PropTypes.func,
+  value: PropTypes.number,
+  disabled: PropTypes.bool,
 };
 
 export default BrightnessSliderComponent;

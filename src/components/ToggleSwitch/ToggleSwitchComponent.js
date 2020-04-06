@@ -1,9 +1,10 @@
 import React from "react";
+import PropTypes from 'prop-types';
+import './ToggleSwitchComponent.css';
 
 const ToggleSwitchComponent = (props) => {
   return (
     <div className="toggle-switch">
-      <h2>Light Status</h2>
       {props.isLightOn ? (
         <button onClick={props.onToggleLight}>On</button>
       ) : (
@@ -12,5 +13,10 @@ const ToggleSwitchComponent = (props) => {
     </div>
   );
 };
+
+ToggleSwitchComponent.propTypes = {
+  isLightOn: PropTypes.bool,
+  onToggleLight: PropTypes.func
+}
 
 export default ToggleSwitchComponent;
