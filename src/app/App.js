@@ -18,6 +18,7 @@ class App extends Component {
     };
   }
 
+  // no error handling because idempotent response on backend
   async componentDidMount() {
     const {
       data: {
@@ -51,11 +52,11 @@ class App extends Component {
     }
   };
 
-  toggleLight = async (state) => {
+  toggleLight = async () => {
+    const state = this.state.on;
     try {
-      const turnOnOffLight = await Actions.toggleLight(!state);
-      const update = await turnOnOffLight.json();
-
+      const update = await Actions.toggleLight(!state);
+      
       if (update.error) throw new Error(update.error);
 
       this.setState({
@@ -71,16 +72,18 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="light-container">
         <h1>{this.state.name}</h1>
         <ToggleSwitchComponent
           isLightOn={this.state.on}
           onToggleLight={this.toggleLight}
         />
+        <h2>{this.state.on ? "On" : "Off"}</h2>
         <BrightnessSliderComponent
           currentBrightness={this.state.brightness}
           onUpdateBrightness={this.updateLightBrightness}
         />
+        <h2>{this.state.brightness * 100 + "%"}</h2>
         <div className="error">{this.state.error}</div>
       </div>
     );
