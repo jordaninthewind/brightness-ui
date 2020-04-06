@@ -11,7 +11,6 @@ const BrightnessSliderComponent = (props) => {
         min="0"
         max="1"
         step=".1"
-        disabled={props.disabled}
         value={props.currentBrightness}
         onChange={props.onUpdateBrightness}
       />
@@ -21,8 +20,7 @@ const BrightnessSliderComponent = (props) => {
 
 BrightnessSliderComponent.propTypes = {
   onUpdateBrightness: PropTypes.func,
-  value: PropTypes.number,
-  disabled: PropTypes.bool,
+  value: PropTypes.number
 };
 
 export default BrightnessSliderComponent;

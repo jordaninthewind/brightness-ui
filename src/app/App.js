@@ -36,25 +36,29 @@ class App extends Component {
   }
 
   updateLightBrightness = async (event) => {
-    try {
-      const newBrightness = event.target.value;
-      this.setState({
-        disabled: true,
-      });
-      const update = await actions.updateBrightness(newBrightness);
+    if (!this.state.disabled) {
+      try {
+        const newBrightness = event.target.value;
+        this.setState({
+          disabled: true,
+        });
+        const update = await actions.updateBrightness(newBrightness);
 
-      if (update.error) throw new Error(update.error);
+        if (update.error) throw new Error(update.error);
 
-      this.setState({
-        error: undefined,
-        brightness: newBrightness,
-        disabled: false,
-      });
-    } catch (err) {
-      this.setState({
-        error: err.message,
-        disabled: false,
-      });
+        this.setState({
+          error: undefined,
+          brightness: newBrightness,
+          disabled: false,
+        });
+      } catch (err) {
+        this.setState({
+          error: err.message,
+          disabled: false,
+        });
+      }
+
+      return false;
     }
   };
 
