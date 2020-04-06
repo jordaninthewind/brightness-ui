@@ -8,12 +8,12 @@ class App extends Component {
   constructor() {
     super();
 
-    // initial state
+    // initial state adds disabled to debounce light update requests
     this.state = {
+      id: undefined,
+      name: undefined,
       on: undefined,
       brightness: undefined,
-      name: undefined,
-      id: undefined,
       error: undefined,
       disabled: false,
     };
@@ -78,7 +78,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="light-container">
+      <div className="light-ui-container">
         <h1>{this.state.name}</h1>
         <ToggleSwitchComponent
           isLightOn={this.state.on}
@@ -94,7 +94,7 @@ class App extends Component {
             <h2>{this.state.brightness * 100 + "%"}</h2>
           </>
         )}
-        <div className="error">{this.state.error}</div>
+        {this.state.error && <div className="error">{this.state.error}</div>}
       </div>
     );
   }
