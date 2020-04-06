@@ -13,3 +13,7 @@ After dependencies are installed, use 'npm run start' to start the frontend at l
 #### Using the Interface
 
 A toggle switch allows a user to toggle a light off/on. The slider adjusts the brightness value and displays the current value in percentage.
+
+#### External Dependencies
+
+The frontend corresponds to a GraphQL that must be running in order to have a response and function correctly. It is currently set to BASE_URL as 'localhost:4000' in src/actions.
