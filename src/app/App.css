@@ -1,12 +1,14 @@
-.light-container {
-  display: flex;
+.light-ui-container {
   align-items: center;
-  justify-content: center;
-  height: 100vh;
+  background-color: #efefef;
+  display: flex;
   flex-direction: column;
+  height: 100vh;
+  justify-content: center;
   text-align: center;
 }
 
 .error {
+  font-size: 0.75rem;
   color: red;
 }
