@@ -15,6 +15,7 @@ class App extends Component {
       name: undefined,
       id: undefined,
       error: undefined,
+      disabled: false,
     };
   }
 
@@ -37,6 +38,9 @@ class App extends Component {
   updateLightBrightness = async (event) => {
     try {
       const newBrightness = event.target.value;
+      this.setState({
+        disabled: true,
+      });
       const update = await Actions.updateBrightness(newBrightness);
 
       if (update.error) throw new Error(update.error);
@@ -44,10 +48,12 @@ class App extends Component {
       this.setState({
         error: undefined,
         brightness: newBrightness,
+        disabled: false,
       });
     } catch (err) {
       this.setState({
         error: err.message,
+        disabled: false,
       });
     }
   };
@@ -56,7 +62,7 @@ class App extends Component {
     const state = this.state.on;
     try {
       const update = await Actions.toggleLight(!state);
-      
+
       if (update.error) throw new Error(update.error);
 
       this.setState({
@@ -82,6 +88,7 @@ class App extends Component {
         <BrightnessSliderComponent
           currentBrightness={this.state.brightness}
           onUpdateBrightness={this.updateLightBrightness}
+          disabled={this.state.disabled}
         />
         <h2>{this.state.brightness * 100 + "%"}</h2>
         <div className="error">{this.state.error}</div>
