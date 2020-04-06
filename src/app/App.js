@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrightnessSliderComponent } from "../components/BrightnessSlider/";
 import { ToggleSwitchComponent } from "../components/ToggleSwitch/";
-import * as actions from "../actions";
+import * as actions from "../Actions";
 import "./App.css";
 
 class App extends Component {
