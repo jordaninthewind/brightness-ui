@@ -3,8 +3,9 @@ import React from "react";
 const BrightnessSliderComponent = (props) => {
   return (
     <div className="slider">
-      Brightness
-      <input 
+      <h2>Brightness</h2>
+      <input
+        disabled={props.disabled}
         type="range"
         min="0"
         max="1"
