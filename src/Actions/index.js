@@ -1,4 +1,5 @@
 const BASE_URL = "http://localhost:4000";
+const UNAVAILABLE_ERROR = "The light is unavailable, please try again.";
 
 const graphQlFetch = (query) => {
   return fetch(BASE_URL, {
@@ -9,7 +10,7 @@ const graphQlFetch = (query) => {
 };
 
 // gets initial state to set UI to current values
-export const getInitialState = () => {
+export const getLightState = () => {
   const query = `
     query {
         light {
@@ -22,9 +23,10 @@ export const getInitialState = () => {
     `;
 
   try {
-    const state = graphQlFetch(query).then(res => res.json());
+    const state = graphQlFetch(query).then((res) => res.json());
 
-    if (state.error) throw new Error("Couldn't get current state from your light.");
+    if (state.error)
+      throw new Error(UNAVAILABLE_ERROR);
 
     return state;
   } catch (err) {
@@ -33,7 +35,53 @@ export const getInitialState = () => {
 };
 
 // toggles light on/off
-export const toggleLight = () => {};
+export const toggleLight = async (bool) => {
+  const query = `
+    mutation {
+        turnOnOffLight(on: ${bool}) {
+            __typename
+        }
+    }
+    `;
+
+  try {
+    const state = await graphQlFetch(query);
+    const {
+      data: {
+        changeLightBrightness: { __typename },
+      },
+    } = await state.json();
+
+    if (__typename == "LightUnavailable") throw new Error(UNAVAILABLE_ERROR);
+
+    return state;
+  } catch (err) {
+    return { error: err };
+  }
+};
 
 // takes in value from slider to pass to endpoint
-export const updateBrightness = (value) => {};
+export const updateBrightness = async (value) => {
+  const query = `
+    mutation {
+        changeLightBrightness(brightness: ${value}) {
+            __typename
+        }
+    }
+    `;
+
+  try {
+    const state = await graphQlFetch(query);
+    const {
+      data: {
+        changeLightBrightness: { __typename },
+      },
+    } = await state.json();
+
+    if (__typename == "LightUnavailable") throw new Error(UNAVAILABLE_ERROR);
+
+    return state;
+  } catch (err) {
+    return { error: err };
+  }
+};
