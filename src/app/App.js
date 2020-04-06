@@ -84,13 +84,16 @@ class App extends Component {
           isLightOn={this.state.on}
           onToggleLight={this.toggleLight}
         />
-        <h2>{this.state.on ? "On" : "Off"}</h2>
-        <BrightnessSliderComponent
-          currentBrightness={this.state.brightness}
-          onUpdateBrightness={this.updateLightBrightness}
-          disabled={this.state.disabled}
-        />
-        <h2>{this.state.brightness * 100 + "%"}</h2>
+        {this.state.on && (
+          <>
+            <BrightnessSliderComponent
+              currentBrightness={this.state.brightness}
+              onUpdateBrightness={this.updateLightBrightness}
+              disabled={this.state.disabled}
+            />
+            <h2>{this.state.brightness * 100 + "%"}</h2>
+          </>
+        )}
         <div className="error">{this.state.error}</div>
       </div>
     );
