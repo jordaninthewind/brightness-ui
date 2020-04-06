@@ -4,11 +4,11 @@ const ToggleSwitchComponent = (props) => {
   return (
     <div className="toggle-switch">
       Light Status
-      <input 
-        type="checkbox"
-        value={props.isLightOn}
-        onChange={props.onToggleLight}
-      />
+      {props.isLightOn ? (
+        <button onClick={props.onToggleLight}>On</button>
+      ) : (
+        <button onClick={props.onToggleLight}>Off</button>
+      )}
     </div>
   );
 };
