@@ -1,15 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 
-class BrightnessSliderComponent extends Component {
-  state = {};
-  render() {
-    return (
-      <>
-        Brightness
-        <input type="range"></input>
-      </>
-    );
-  }
-}
+const BrightnessSliderComponent = (props) => {
+  return (
+    <div className="slider">
+      Brightness
+      <input type="range"></input>
+    </div>
+  );
+};
 
 export default BrightnessSliderComponent;

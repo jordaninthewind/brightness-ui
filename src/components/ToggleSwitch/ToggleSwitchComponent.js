@@ -1,15 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 
-class ToggleSwitchComponent extends Component {
-  state = {};
-  render() {
-    return (
-      <>
-        Light Status
-        <input type="checkbox"></input>
-      </>
-    );
-  }
-}
+const ToggleSwitchComponent = (props) => {
+  return (
+    <div className="toggle-switch">
+      Light Status
+      <input type="checkbox"></input>
+    </div>
+  );
+};
 
 export default ToggleSwitchComponent;
