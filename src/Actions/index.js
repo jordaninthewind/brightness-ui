@@ -48,11 +48,11 @@ export const toggleLight = async (bool) => {
     const state = await graphQlFetch(query);
     const {
       data: {
-        changeLightBrightness: { __typename },
+        turnOnOffLight: { __typename },
       },
     } = await state.json();
 
-    if (__typename == "LightUnavailable") throw new Error(UNAVAILABLE_ERROR);
+    if (__typename === "LightUnavailable") throw new Error(UNAVAILABLE_ERROR);
 
     return state;
   } catch (err) {
@@ -78,7 +78,7 @@ export const updateBrightness = async (value) => {
       },
     } = await state.json();
 
-    if (__typename == "LightUnavailable") throw new Error(UNAVAILABLE_ERROR);
+    if (__typename === "LightUnavailable") throw new Error(UNAVAILABLE_ERROR);
 
     return state;
   } catch (err) {
