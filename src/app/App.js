@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrightnessSliderComponent } from "../components/BrightnessSlider/";
 import { ToggleSwitchComponent } from "../components/ToggleSwitch/";
-import * as Actions from "../Actions";
+import * as actions from "../actions";
 import "./App.css";
 
 class App extends Component {
@@ -25,7 +25,7 @@ class App extends Component {
       data: {
         light: { on, brightness, name, id },
       },
-    } = await Actions.getLightState();
+    } = await actions.getLightState();
 
     this.setState({
       name,
@@ -41,7 +41,7 @@ class App extends Component {
       this.setState({
         disabled: true,
       });
-      const update = await Actions.updateBrightness(newBrightness);
+      const update = await actions.updateBrightness(newBrightness);
 
       if (update.error) throw new Error(update.error);
 
@@ -61,7 +61,7 @@ class App extends Component {
   toggleLight = async () => {
     const state = this.state.on;
     try {
-      const update = await Actions.toggleLight(!state);
+      const update = await actions.toggleLight(!state);
 
       if (update.error) throw new Error(update.error);
 
