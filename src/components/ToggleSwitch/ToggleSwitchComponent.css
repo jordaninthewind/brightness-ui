@@ -1,9 +1,14 @@
 button {
   border: 2px solid grey;
   border-radius: 4px;
-  font-size: 1rem;
+  font-size: 1.25rem;
+  font-weight: 200;
   height: 5vh;
   max-height: 40px;
   width: 20vw;
   max-width: 200px;
+}
+
+button:focus {
+  outline: none;
 }
