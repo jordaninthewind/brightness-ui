@@ -1,3 +1,25 @@
-.slider {
-    max-width: 80%;
+.slider-title {
+    font-size: 1.5rem;
+    font-weight: 200;
+    padding: 20px;
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    max-width: 200px;
+    width: 40vw;
+    border: 2px solid grey;
+}
+
+input[type="range"] {
+    outline: none;
+}
+        
+input[type="range"]::-webkit-slider-thumb {
+    /* -webkit-appearance: none; */
+    height: 20px;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
 }

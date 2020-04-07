@@ -4,8 +4,8 @@ import "./BrightnessSliderComponent.css";
 
 const BrightnessSliderComponent = (props) => {
   return (
-    <div className="slider">
-      <h2>Brightness</h2>
+    < >
+      <div className="slider-title">Brightness</div>
       <input
         type="range"
         min="0"
@@ -14,7 +14,7 @@ const BrightnessSliderComponent = (props) => {
         value={props.currentBrightness}
         onChange={props.onUpdateBrightness}
       />
-    </div>
+    </>
   );
 };
 
