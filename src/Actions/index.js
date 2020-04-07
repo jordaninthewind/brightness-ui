@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:4000";
+const BASE_URL = "http://192.168.1.26:4000";
 const UNAVAILABLE_ERROR = "The light is unavailable, please try again.";
 
 const graphQlFetch = (query) => {
