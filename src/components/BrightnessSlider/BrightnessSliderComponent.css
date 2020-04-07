@@ -6,9 +6,9 @@
 
 input[type="range"] {
     -webkit-appearance: none;
-    max-width: 200px;
-    width: 40vw;
-    border: 2px solid grey;
+    width: 200px;
+    height: 15px;
+    border: 1px solid grey;
 }
 
 input[type="range"] {
@@ -16,8 +16,7 @@ input[type="range"] {
 }
         
 input[type="range"]::-webkit-slider-thumb {
-    /* -webkit-appearance: none; */
-    height: 20px;
+    height: 50px;
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
