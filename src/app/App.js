@@ -83,7 +83,7 @@ class App extends Component {
   render() {
     return (
       <div className="light-ui-container">
-        <h1>{this.state.name}</h1>
+        <div className="light-name">{this.state.name}</div>
         <ToggleSwitchComponent
           isLightOn={this.state.on}
           onToggleLight={this.toggleLight}
@@ -95,7 +95,7 @@ class App extends Component {
               onUpdateBrightness={this.updateLightBrightness}
               disabled={this.state.disabled}
             />
-            <h2>{this.state.brightness * 100 + "%"}</h2>
+            <div className="light-percentage">{this.state.brightness * 100 + "%"}</div>
           </>
         )}
         {this.state.error && <div className="error">{this.state.error}</div>}
