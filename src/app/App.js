@@ -88,17 +88,28 @@ class App extends Component {
           isLightOn={this.state.on}
           onToggleLight={this.toggleLight}
         />
-        {this.state.on && (
+        <div
+          className={
+            "brightness-container " + (this.state.on ? "expanded" : "")
+          }
+        >
           <>
             <BrightnessSliderComponent
               currentBrightness={this.state.brightness}
               onUpdateBrightness={this.updateLightBrightness}
               disabled={this.state.disabled}
             />
-            <div className="light-percentage">{this.state.brightness * 100 + "%"}</div>
+            <div className="light-percentage">
+              {this.state.brightness * 100 + "%"}
+            </div>
           </>
-        )}
-        {this.state.error && <div className="error">{this.state.error}</div>}
+        </div>
+        <div
+          className="error"
+          style={{ visibility: !this.state.error ? "hidden" : "inherit" }}
+        >
+          {this.state.error || "something"}
+        </div>
       </div>
     );
   }
