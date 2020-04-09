@@ -1,4 +1,4 @@
-const BASE_URL = "http://192.168.1.26:4000";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 const UNAVAILABLE_ERROR = "The light is unavailable, please try again.";
 
 const graphQlFetch = (query) => {
@@ -26,7 +26,7 @@ export const getLightState = () => {
     const state = graphQlFetch(query).then((res) => res.json());
 
     if (state.error)
-      throw new Error(UNAVAILABLE_ERROR);
+      throw new Error(UNAVAILABLE_ERROR); 
 
     return state;
   } catch (err) {
