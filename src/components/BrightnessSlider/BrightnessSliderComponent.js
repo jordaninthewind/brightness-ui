@@ -3,12 +3,13 @@ import PropTypes from "prop-types";
 import "./BrightnessSliderComponent.css";
 
 const BrightnessSliderComponent = ({
+  brightness,
+  inputRef,
   on,
   onUpdateBrightness,
-  inputRef,
-  brightness
 }) => {
   const percentage = (inputRef.current && inputRef.current.value) || brightness;
+
   return (
     <div className={"brightness-container " + (on ? "expanded" : "")}>
       <div className="brightness-title">Brightness</div>
@@ -31,12 +32,12 @@ const BrightnessSliderComponent = ({
 BrightnessSliderComponent.propTypes = {
   brightness: PropTypes.number,
   onUpdateBrightness: PropTypes.func,
-  value: PropTypes.number,
+  inputRef: PropTypes.object,
   on: PropTypes.bool,
 };
 
 BrightnessSliderComponent.defaultProps = {
-  on: false
-}
+  on: false,
+};
 
 export default BrightnessSliderComponent;

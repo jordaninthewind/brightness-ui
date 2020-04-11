@@ -15,7 +15,6 @@ class App extends Component {
       on: undefined,
       brightness: undefined,
       error: undefined,
-      disabled: false,
       loading: false,
     };
     this.inputRef = React.createRef();
@@ -44,7 +43,7 @@ class App extends Component {
   updateLightBrightness = async (event) => {
     if (!this.state.loading) {
       try {
-        const newBrightness = this.inputRef.current.value;
+        const newBrightness = parseFloat(this.inputRef.current.value);
         this.setState({
           loading: true,
         });
@@ -56,13 +55,11 @@ class App extends Component {
         this.setState({
           error: undefined,
           brightness: newBrightness,
-          disabled: false,
           loading: false,
         });
       } catch (err) {
         this.setState({
           error: err.message,
-          disabled: false,
           loading: false,
         });
       }
@@ -103,13 +100,14 @@ class App extends Component {
           onToggleLight={this.toggleLight}
           loading={this.state.loading}
         />
-        <BrightnessSliderComponent
-          on={this.state.on}
-          brightness={this.state.brightness}
-          disabled={this.state.disabled}
-          onUpdateBrightness={this.updateLightBrightness}
-          inputRef={this.inputRef}
-        />
+        {this.state.brightness && (
+          <BrightnessSliderComponent
+            on={this.state.on}
+            brightness={this.state.brightness}
+            onUpdateBrightness={this.updateLightBrightness}
+            inputRef={this.inputRef}
+          />
+        )}
         <div
           className="error"
           style={{ visibility: !this.state.error ? "hidden" : "inherit" }}
