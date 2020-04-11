@@ -31,7 +31,7 @@ class App extends Component {
       brightness,
       id,
       name,
-      on,
+      on: on === "on" ? true : false,
     });
   }
 
@@ -41,6 +41,7 @@ class App extends Component {
         const newBrightness = event.target.value;
         this.setState({
           disabled: true,
+          loading: true,
         });
         const update = await actions.updateBrightness(newBrightness);
 
@@ -50,11 +51,13 @@ class App extends Component {
           error: undefined,
           brightness: newBrightness,
           disabled: false,
+          loading: false,
         });
       } catch (err) {
         this.setState({
           error: err.message,
           disabled: false,
+          loading: false,
         });
       }
 
@@ -65,6 +68,9 @@ class App extends Component {
   toggleLight = async () => {
     const state = this.state.on;
     try {
+      this.setState({
+        loading: true,
+      });
       const update = await actions.toggleLight(!state);
 
       if (update.error) throw new Error(update.error);
@@ -72,10 +78,12 @@ class App extends Component {
       this.setState({
         error: undefined,
         on: !state,
+        loading: false,
       });
     } catch (err) {
       this.setState({
         error: err.message,
+        loading: false,
       });
     }
   };
@@ -87,19 +95,19 @@ class App extends Component {
         <ToggleSwitchComponent
           isLightOn={this.state.on}
           onToggleLight={this.toggleLight}
+          loading={this.state.loading}
         />
-        <div className={"label-container " + (this.state.on ? "expanded" : "")}>
-          <BrightnessSliderComponent
-            brightness={this.state.brightness}
-            onUpdateBrightness={this.updateLightBrightness}
-            disabled={this.state.disabled}
-          />
-        </div>
+        <BrightnessSliderComponent
+          on={this.state.on}
+          brightness={this.state.brightness}
+          disabled={this.state.disabled}
+          onUpdateBrightness={this.updateLightBrightness}
+        />
         <div
           className="error"
           style={{ visibility: !this.state.error ? "hidden" : "inherit" }}
         >
-          {this.state.error || "something"}
+          {this.state.error || "Spacing Placeholder"}
         </div>
       </div>
     );
