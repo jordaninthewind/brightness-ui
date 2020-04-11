@@ -21,6 +21,10 @@ class App extends Component {
   }
 
   async componentDidMount() {
+    this.setState({
+      loading: true,
+    });
+
     const {
       data: {
         light: { brightness, id, name, on },
@@ -30,6 +34,7 @@ class App extends Component {
     this.setState({
       brightness,
       id,
+      loading: false,
       name,
       on: on === "on" ? true : false,
     });

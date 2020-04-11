@@ -1,10 +1,21 @@
-.slider-title {
+
+.brightness-container {
+  height: 0px;
+  overflow-y: hidden;
+  transition: height 0.5s ease-in;
+}
+
+.brightness-container.expanded {
+  height: 150px;
+}
+
+.brightness-title {
   font-size: 1.5rem;
   font-weight: 200;
   padding: 20px;
 }
 
-.light-percentage {
+.brightness-value {
   font-size: 2.5rem;
   font-weight: 200;
   padding-top: 20px;
