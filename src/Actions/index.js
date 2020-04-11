@@ -10,20 +10,20 @@ const graphQlFetch = (query) => {
 };
 
 // gets initial state to set UI to current values
-export const getLightState = () => {
+export const getLightState = async () => {
   const query = `
     query {
         light {
             id
-            name
-            on
+            name: label
+            on: power
             brightness
         }
     }
     `;
 
   try {
-    const state = graphQlFetch(query).then((res) => res.json());
+    const state = await graphQlFetch(query).then((res) => res.json());
 
     if (state.error)
       throw new Error(UNAVAILABLE_ERROR); 

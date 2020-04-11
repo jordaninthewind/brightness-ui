@@ -16,22 +16,22 @@ class App extends Component {
       brightness: undefined,
       error: undefined,
       disabled: false,
+      loading: false,
     };
   }
 
-  // no error handling because idempotent response on backend
   async componentDidMount() {
     const {
       data: {
-        light: { on, brightness, name, id },
+        light: { brightness, id, name, on },
       },
     } = await actions.getLightState();
 
     this.setState({
-      name,
-      id,
-      on,
       brightness,
+      id,
+      name,
+      on,
     });
   }
 
@@ -88,21 +88,12 @@ class App extends Component {
           isLightOn={this.state.on}
           onToggleLight={this.toggleLight}
         />
-        <div
-          className={
-            "brightness-container " + (this.state.on ? "expanded" : "")
-          }
-        >
-          <>
-            <BrightnessSliderComponent
-              currentBrightness={this.state.brightness}
-              onUpdateBrightness={this.updateLightBrightness}
-              disabled={this.state.disabled}
-            />
-            <div className="light-percentage">
-              {this.state.brightness * 100 + "%"}
-            </div>
-          </>
+        <div className={"label-container " + (this.state.on ? "expanded" : "")}>
+          <BrightnessSliderComponent
+            brightness={this.state.brightness}
+            onUpdateBrightness={this.updateLightBrightness}
+            disabled={this.state.disabled}
+          />
         </div>
         <div
           className="error"
