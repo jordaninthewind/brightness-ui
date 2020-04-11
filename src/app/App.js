@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { BrightnessSliderComponent } from "../components/BrightnessSlider/";
-import { ToggleSwitchComponent } from "../components/ToggleSwitch/";
+import { OnOffSwitchComponent } from "../components/OnOffSwitch/";
 import * as actions from "../Actions";
 import "./App.css";
 
@@ -18,6 +18,7 @@ class App extends Component {
       disabled: false,
       loading: false,
     };
+    this.inputRef = React.createRef();
   }
 
   async componentDidMount() {
@@ -41,13 +42,13 @@ class App extends Component {
   }
 
   updateLightBrightness = async (event) => {
-    if (!this.state.disabled) {
+    if (!this.state.loading) {
       try {
-        const newBrightness = event.target.value;
+        const newBrightness = this.inputRef.current.value;
         this.setState({
-          disabled: true,
           loading: true,
         });
+
         const update = await actions.updateBrightness(newBrightness);
 
         if (update.error) throw new Error(update.error);
@@ -97,7 +98,7 @@ class App extends Component {
     return (
       <div className="light-ui-container">
         <div className="light-name">{this.state.name}</div>
-        <ToggleSwitchComponent
+        <OnOffSwitchComponent
           isLightOn={this.state.on}
           onToggleLight={this.toggleLight}
           loading={this.state.loading}
@@ -107,6 +108,7 @@ class App extends Component {
           brightness={this.state.brightness}
           disabled={this.state.disabled}
           onUpdateBrightness={this.updateLightBrightness}
+          inputRef={this.inputRef}
         />
         <div
           className="error"

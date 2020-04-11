@@ -1,20 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./ToggleSwitchComponent.css";
+import "./OnOffSwitchComponent.css";
 
-const ToggleSwitchComponent = ({ onToggleLight, isLightOn, loading }) => {
+const OnOffSwitchComponent = ({ onToggleLight, isLightOn, loading }) => {
   return (
     <div className="toggle-switch">
       <button onClick={onToggleLight}>{isLightOn ? "On" : "Off"}</button>
-      {loading && <div className="spinner"></div>}
+      {loading && <div className="spinner" />}
     </div>
   );
 };
 
-ToggleSwitchComponent.propTypes = {
+OnOffSwitchComponent.propTypes = {
   isLightOn: PropTypes.bool,
   onToggleLight: PropTypes.func,
   loading: PropTypes.bool,
 };
 
-export default ToggleSwitchComponent;
+export default OnOffSwitchComponent;

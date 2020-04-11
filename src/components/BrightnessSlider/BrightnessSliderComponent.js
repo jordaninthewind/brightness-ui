@@ -4,10 +4,11 @@ import "./BrightnessSliderComponent.css";
 
 const BrightnessSliderComponent = ({
   on,
-  brightness,
   onUpdateBrightness,
-  value,
+  inputRef,
+  brightness
 }) => {
+  const percentage = (inputRef.current && inputRef.current.value) || brightness;
   return (
     <div className={"brightness-container " + (on ? "expanded" : "")}>
       <div className="brightness-title">Brightness</div>
@@ -15,12 +16,13 @@ const BrightnessSliderComponent = ({
         type="range"
         min="0"
         max="1"
-        step=".1"
-        value={brightness}
+        step=".01"
+        defaultValue={brightness}
         onChange={onUpdateBrightness}
+        ref={inputRef}
       />
       <div className="brightness-value">
-        {Math.floor(brightness * 100) + "%"}
+        {Math.floor(percentage * 100) + "%"}
       </div>
     </div>
   );
