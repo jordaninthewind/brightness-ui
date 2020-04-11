@@ -17,16 +17,6 @@
   padding: 20px;
 }
 
-.brightness-container {
-  height: 0px;
-  overflow-y: hidden;
-  transition: height .5s ease-in;
-}
-
-.brightness-container.expanded {
-  height: 150px;
-}
-
 .error {
   color: red;
   font-size: 0.75rem;
