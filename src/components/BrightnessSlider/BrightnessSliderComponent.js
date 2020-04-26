@@ -19,7 +19,8 @@ const BrightnessSliderComponent = ({
         max="1"
         step=".01"
         defaultValue={brightness}
-        onChange={onUpdateBrightness}
+        onMouseUp={onUpdateBrightness}
+        onTouchEnd={onUpdateBrightness}
         ref={inputRef}
       />
       <div className="brightness-value">
