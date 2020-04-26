@@ -40,14 +40,31 @@ class App extends Component {
     });
   }
 
+  async componentDidUpdate(_, prevState) {
+    if (
+      this.state.brightness &&
+      prevState.brightness !== this.state.brightness
+    ) {
+      const {
+        data: {
+          light: { brightness },
+        },
+      } = await actions.getLightState();
+
+      this.setState({
+        brightness,
+      });
+    }
+  }
+
   updateLightBrightness = async (event) => {
     if (!this.state.loading) {
       try {
-        const newBrightness = parseFloat(this.inputRef.current.value);
         this.setState({
           loading: true,
         });
 
+        const newBrightness = parseFloat(this.inputRef.current.value);
         const update = await actions.updateBrightness(newBrightness);
 
         if (update.error) throw new Error(update.error);
