@@ -117,7 +117,7 @@ class App extends Component {
           onToggleLight={this.toggleLight}
           loading={this.state.loading}
         />
-        {this.state.brightness && (
+        {this.state.brightness >= 0 && (
           <BrightnessSliderComponent
             on={this.state.on}
             brightness={this.state.brightness}
