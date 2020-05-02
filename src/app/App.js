@@ -40,24 +40,24 @@ class App extends Component {
     });
   }
 
-  async componentDidUpdate(_, prevState) {
-    if (
-      this.state.brightness &&
-      prevState.brightness !== this.state.brightness
-    ) {
-      const {
-        data: {
-          light: { brightness },
-        },
-      } = await actions.getLightState();
+  // async componentDidUpdate(_, prevState) {
+  //   if (
+  //     this.state.brightness &&
+  //     prevState.brightness !== this.state.brightness
+  //   ) {
+  //     const {
+  //       data: {
+  //         light: { brightness },
+  //       },
+  //     } = await actions.getLightState();
 
-      this.setState({
-        brightness,
-      });
-    }
-  }
+  //     this.setState({
+  //       brightness,
+  //     });
+  //   }
+  // }
 
-  updateLightBrightness = async (event) => {
+  updateLightBrightness = async () => {
     if (!this.state.loading) {
       try {
         this.setState({
@@ -70,7 +70,7 @@ class App extends Component {
         if (update.error) throw new Error(update.error);
 
         this.setState({
-          error: undefined,
+          error: null,
           brightness: newBrightness,
           loading: false,
         });
@@ -85,19 +85,20 @@ class App extends Component {
     }
   };
 
-  toggleLight = async () => {
-    const state = this.state.on;
+  turnLightOnOff = async () => {
+    const { on } = this.state;
     try {
       this.setState({
         loading: true,
       });
-      const update = await actions.toggleLight(!state);
 
-      if (update.error) throw new Error(update.error);
+      const { data, error } = await actions.turnLightOnOff(!on);
+
+      if (error) throw new Error(error);
 
       this.setState({
-        error: undefined,
-        on: !state,
+        error: null,
+        on: data.turnOnOffLight.light.power === "on" ? true : false,
         loading: false,
       });
     } catch (err) {
@@ -114,7 +115,7 @@ class App extends Component {
         <div className="light-name">{this.state.name}</div>
         <OnOffSwitchComponent
           isLightOn={this.state.on}
-          onToggleLight={this.toggleLight}
+          onToggleLight={this.turnLightOnOff}
           loading={this.state.loading}
         />
         {this.state.brightness >= 0 && (

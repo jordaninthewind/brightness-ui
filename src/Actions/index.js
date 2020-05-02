@@ -25,8 +25,7 @@ export const getLightState = async () => {
   try {
     const state = await graphQlFetch(query).then((res) => res.json());
 
-    if (state.error)
-      throw new Error(UNAVAILABLE_ERROR); 
+    if (state.error) throw new Error(UNAVAILABLE_ERROR);
 
     return state;
   } catch (err) {
@@ -35,28 +34,32 @@ export const getLightState = async () => {
 };
 
 // toggles light on/off
-export const toggleLight = async (bool) => {
+export const turnLightOnOff = async (bool) => {
   const query = `
     mutation {
-        turnOnOffLight(on: ${bool}) {
-            __typename
+      turnOnOffLight(on: ${bool}) {
+        __typename
+          ... on LightUnavailable {
+            message
+          }
+          ... on TurnOnOffLightSuccess {
+            light {
+              power
+            }
+          }
         }
-    }
+      }
     `;
 
   try {
-    const state = await graphQlFetch(query);
-    const {
-      data: {
-        turnOnOffLight: { __typename },
-      },
-    } = await state.json();
+    const state = await graphQlFetch(query).then((res) => res.json());
 
-    if (__typename === "LightUnavailable") throw new Error(UNAVAILABLE_ERROR);
+    if (state.__typename === "LightUnavailable")
+      throw new Error(UNAVAILABLE_ERROR);
 
     return state;
-  } catch (err) {
-    return { error: err };
+  } catch (error) {
+    return { error };
   }
 };
 
@@ -65,20 +68,23 @@ export const updateBrightness = async (value) => {
   const query = `
     mutation {
         changeLightBrightness(brightness: ${value}) {
-            __typename
+          __typename 
+          ... on LightUnavailable {
+            message
+          }
+          ... on ChangeLightBrightnessSuccess {
+            light {
+              brightness
+            }
+          }
         }
-    }
+      }
     `;
 
   try {
-    const state = await graphQlFetch(query);
-    const {
-      data: {
-        changeLightBrightness: { __typename },
-      },
-    } = await state.json();
+    const state = await graphQlFetch(query).then(res => res.json());
 
-    if (__typename === "LightUnavailable") throw new Error(UNAVAILABLE_ERROR);
+    if (state.__typename === "LightUnavailable") throw new Error(UNAVAILABLE_ERROR);
 
     return state;
   } catch (err) {
