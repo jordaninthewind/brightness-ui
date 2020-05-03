@@ -3,6 +3,7 @@ import { BrightnessSliderComponent } from "../components/BrightnessSlider/";
 import { OnOffSwitchComponent } from "../components/OnOffSwitch/";
 import * as actions from "../Actions";
 import "./App.css";
+import ColorSelectorComponent from "../components/ColorSelector";
 
 class App extends Component {
   constructor() {
@@ -40,22 +41,22 @@ class App extends Component {
     });
   }
 
-  // async componentDidUpdate(_, prevState) {
-  //   if (
-  //     this.state.brightness &&
-  //     prevState.brightness !== this.state.brightness
-  //   ) {
-  //     const {
-  //       data: {
-  //         light: { brightness },
-  //       },
-  //     } = await actions.getLightState();
+  async componentDidUpdate(_, prevState) {
+    if (
+      this.state.brightness &&
+      prevState.brightness !== this.state.brightness
+    ) {
+      const {
+        data: {
+          light: { brightness },
+        },
+      } = await actions.getLightState();
 
-  //     this.setState({
-  //       brightness,
-  //     });
-  //   }
-  // }
+      this.setState({
+        brightness,
+      });
+    }
+  }
 
   updateLightBrightness = async () => {
     if (!this.state.loading) {
@@ -109,22 +110,28 @@ class App extends Component {
     }
   };
 
+  changeLightColor = color => {
+    this.setState({ color: color.hex });
+    actions.changeLightColor(color.hex);
+  };
+
   render() {
     return (
       <div className="light-ui-container">
         <div className="light-name">{this.state.name}</div>
-        <OnOffSwitchComponent
-          isLightOn={this.state.on}
-          onToggleLight={this.turnLightOnOff}
-          loading={this.state.loading}
-        />
-        {this.state.brightness >= 0 && (
-          <BrightnessSliderComponent
-            on={this.state.on}
-            brightness={this.state.brightness}
-            onUpdateBrightness={this.updateLightBrightness}
-            inputRef={this.inputRef}
-          />
+        {this.state.on && (
+          <>
+            <BrightnessSliderComponent
+              on={this.state.on}
+              brightness={this.state.brightness}
+              onUpdateBrightness={this.updateLightBrightness}
+              inputRef={this.inputRef}
+            />
+            <ColorSelectorComponent
+              color={this.state.color}
+              onChangeColor={this.changeLightColor}
+            />
+          </>
         )}
         <div
           className="error"
@@ -132,6 +139,11 @@ class App extends Component {
         >
           {this.state.error || "Spacing Placeholder"}
         </div>
+        <OnOffSwitchComponent
+          isLightOn={this.state.on}
+          onToggleLight={this.turnLightOnOff}
+          loading={this.state.loading}
+        />
       </div>
     );
   }
