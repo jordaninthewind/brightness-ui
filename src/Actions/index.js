@@ -82,9 +82,45 @@ export const updateBrightness = async (value) => {
     `;
 
   try {
-    const state = await graphQlFetch(query).then(res => res.json());
+    const state = await graphQlFetch(query).then((res) => res.json());
 
-    if (state.__typename === "LightUnavailable") throw new Error(UNAVAILABLE_ERROR);
+    if (state.__typename === "LightUnavailable")
+      throw new Error(UNAVAILABLE_ERROR);
+
+    return state;
+  } catch (err) {
+    return { error: err };
+  }
+};
+
+// takes in value from color picker to pass to endpoint
+export const changeLightColor = async (value) => {
+  console.log(value)
+  const query = `
+    mutation {
+        changeLightColor(color: "${value}") {
+          __typename
+          ... on LightUnavailable {
+            message
+          }
+          ... on ChangeLightColorSuccess {
+            light {
+              name: label
+              brightness
+              color {
+                hue
+              }
+            }
+          }       
+        }
+      }
+    `;
+
+  try {
+    const state = await graphQlFetch(query).then((res) => res.json());
+
+    if (state.__typename === "LightUnavailable")
+      throw new Error(UNAVAILABLE_ERROR);
 
     return state;
   } catch (err) {
