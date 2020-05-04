@@ -17,6 +17,7 @@ class App extends Component {
       brightness: undefined,
       error: undefined,
       loading: false,
+      color: undefined
     };
     this.inputRef = React.createRef();
   }
@@ -28,7 +29,7 @@ class App extends Component {
 
     const {
       data: {
-        light: { brightness, id, name, on },
+        light: { brightness, id, name, on, color },
       },
     } = await actions.getLightState();
 
@@ -37,6 +38,7 @@ class App extends Component {
       id,
       loading: false,
       name,
+      color,
       on: on === "on" ? true : false,
     });
   }

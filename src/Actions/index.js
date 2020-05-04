@@ -18,6 +18,11 @@ export const getLightState = async () => {
             name: label
             on: power
             brightness
+            color {
+              hue
+              saturation
+              kelvin
+            }
         }
     }
     `;
@@ -95,7 +100,7 @@ export const updateBrightness = async (value) => {
 
 // takes in value from color picker to pass to endpoint
 export const changeLightColor = async (value) => {
-  console.log(value)
+  console.log(value);
   const query = `
     mutation {
         changeLightColor(color: "${value}") {
